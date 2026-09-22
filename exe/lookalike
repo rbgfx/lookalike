@@ -1,0 +1,39 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require "optparse"
+require "lookalike"
+
+command = ARGV.shift
+case command
+when "report"
+  puts Lookalike::Report.new(ARGV.shift || Lookalike.config.output_dir).write
+when "diff"
+  expected, actual = ARGV.shift(2)
+  output = nil
+  OptionParser.new { |opts| opts.on("-o PATH") { |path| output = path } }.parse!(ARGV)
+  result = Lookalike.compare(expected, actual, mode: :channel)
+  result.diff_image&.write(output) if output
+  puts "#{result.diff_pixels} differing pixels"
+when "approve"
+  name = ARGV.shift
+  store = Lookalike::Store.new
+  names = if name == "--all"
+    Dir[File.join(Lookalike.config.output_dir, "**", "*.actual.png")].map do |file|
+      file.delete_prefix("#{Lookalike.config.output_dir}/").delete_suffix(".actual.png")
+    end
+  else
+    [name]
+  end
+  names.each do |entry|
+    source = store.output_path(entry, "actual")
+    destination = store.path(entry)
+    raise ArgumentError, "actual image is missing: #{source}" unless File.file?(source)
+    FileUtils.mkdir_p(File.dirname(destination))
+    FileUtils.cp(source, destination)
+    puts destination
+  end
+else
+  warn "usage: lookalike report [DIR] | diff EXPECTED ACTUAL [-o PATH] | approve NAME|--all"
+  exit 1
+end
