@@ -1,18 +1,14 @@
 # Lookalike
 
-[![Gem version](https://badge.fury.io/rb/lookalike.svg)](https://rubygems.org/gems/lookalike)
-[![Downloads](https://img.shields.io/gem/dt/lookalike?label=downloads)](https://rubygems.org/gems/lookalike)
-[![CI](https://github.com/rbgfx/lookalike/actions/workflows/main.yml/badge.svg)](https://github.com/rbgfx/lookalike/actions/workflows/main.yml)
-[![Ruby](https://img.shields.io/badge/ruby-%3E%3D3.1-CC342D?logo=ruby&logoColor=white)](https://www.ruby-lang.org/)
-[![License](https://img.shields.io/badge/license-MIT-750014.svg)](LICENSE.txt)
-
 > Golden image comparison for Ruby graphics.
 
-Lookalike turns rendered images into visual regression tests. It compares
-Tessel images, file paths, and framebuffer-like objects, then writes actionable
-diffs for failed snapshots.
+[![Gem version](https://badge.fury.io/rb/lookalike.svg)](https://rubygems.org/gems/lookalike) [![Downloads](https://img.shields.io/gem/dt/lookalike?label=downloads)](https://rubygems.org/gems/lookalike) [![Ruby](https://img.shields.io/badge/ruby-%3E%3D3.1-CC342D?logo=ruby&logoColor=white)](https://www.ruby-lang.org/) [![CI](https://github.com/rbgfx/lookalike/actions/workflows/main.yml/badge.svg)](https://github.com/rbgfx/lookalike/actions/workflows/main.yml) [![License](https://img.shields.io/badge/license-MIT-750014.svg)](LICENSE.txt)
 
-**[Features](#features) · [Installation](#installation) · [Quick start](#quick-start) · [Development](#development)**
+**[Features](#features) · [Installation](#installation) · [Requirements](#requirements) · [Quick start](#quick-start) · [Development](#development) · [License](#license) · [Website](https://rbgfx.github.io/lookalike/)**
+
+---
+
+Lookalike compares rendered images and writes actionable diffs for failed snapshots.
 
 ## Features
 
@@ -42,6 +38,11 @@ Or install the released gem:
 ~~~sh
 gem install lookalike
 ~~~
+
+## Requirements
+
+- Ruby 3.1 or newer.
+- Tessel is installed automatically as a runtime dependency.
 
 ## Quick start
 
