@@ -1,14 +1,19 @@
-# Lookalike
+<h1 align="center">Lookalike</h1>
 
-> Golden image comparison for Ruby graphics.
+<p align="center">Golden image comparison for Ruby graphics.</p>
 
-[![Gem version](https://badge.fury.io/rb/lookalike.svg)](https://rubygems.org/gems/lookalike) [![Downloads](https://img.shields.io/gem/dt/lookalike?label=downloads)](https://rubygems.org/gems/lookalike) [![Ruby](https://img.shields.io/badge/ruby-%3E%3D3.1-CC342D?logo=ruby&logoColor=white)](https://www.ruby-lang.org/) [![CI](https://github.com/rbgfx/lookalike/actions/workflows/main.yml/badge.svg)](https://github.com/rbgfx/lookalike/actions/workflows/main.yml) [![License](https://img.shields.io/badge/license-MIT-750014.svg)](LICENSE.txt)
+<p align="center">
+  <a href="https://rubygems.org/gems/lookalike"><img src="https://badge.fury.io/rb/lookalike.svg" alt="Gem Version"></a>
+  <a href="https://rubygems.org/gems/lookalike"><img src="https://img.shields.io/gem/dt/lookalike?label=downloads" alt="Downloads"></a>
+  <a href="https://www.ruby-lang.org/"><img src="https://img.shields.io/badge/ruby-%3E%3D3.1-CC342D?logo=ruby&amp;logoColor=white" alt="Ruby Version"></a>
+  <a href="LICENSE.txt"><img src="https://img.shields.io/badge/license-MIT-750014.svg" alt="License"></a>
+</p>
 
-**[Features](#features) · [Installation](#installation) · [Requirements](#requirements) · [Quick start](#quick-start) · [Development](#development) · [License](#license) · [Website](https://rbgfx.github.io/lookalike/)**
+[Features](#features) · [Installation](#installation) · [Quick Start](#quick-start)
 
----
+***
 
-Lookalike compares rendered images and writes actionable diffs for failed snapshots.
+Lookalike turns rendered images into visual regression tests. It compares Tessel images, file paths, and framebuffer-like objects, then writes actionable diffs for failed snapshots.
 
 ## Features
 
@@ -39,12 +44,12 @@ Or install the released gem:
 gem install lookalike
 ~~~
 
-## Requirements
+### Requirements
 
 - Ruby 3.1 or newer.
 - Tessel is installed automatically as a runtime dependency.
 
-## Quick start
+## Quick Start
 
 ~~~ruby
 require "lookalike"
@@ -80,6 +85,10 @@ Set <code>CI</code> to make missing snapshots fail.
 bundle install
 bundle exec rake verify
 ~~~
+
+## Contributing
+
+Bug reports and pull requests are welcome at [rbgfx/lookalike](https://github.com/rbgfx/lookalike).
 
 ## License
 
