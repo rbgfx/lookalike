@@ -2,7 +2,7 @@
 
 [![Gem version](https://badge.fury.io/rb/lookalike.svg)](https://rubygems.org/gems/lookalike)
 [![Downloads](https://img.shields.io/gem/dt/lookalike?label=downloads)](https://rubygems.org/gems/lookalike)
-[![CI](https://github.com/rbgfx/lookalike/actions/workflows/ci.yml/badge.svg)](https://github.com/rbgfx/lookalike/actions/workflows/ci.yml)
+[![CI](https://github.com/rbgfx/lookalike/actions/workflows/main.yml/badge.svg)](https://github.com/rbgfx/lookalike/actions/workflows/main.yml)
 [![Ruby](https://img.shields.io/badge/ruby-%3E%3D3.1-CC342D?logo=ruby&logoColor=white)](https://www.ruby-lang.org/)
 [![License](https://img.shields.io/badge/license-MIT-750014.svg)](LICENSE.txt)
 
