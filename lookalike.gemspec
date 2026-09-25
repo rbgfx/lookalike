@@ -5,7 +5,7 @@ require_relative "lib/lookalike/version"
 Gem::Specification.new do |spec|
   spec.name = "lookalike"
   spec.version = Lookalike::VERSION
-  spec.authors = ["ydah"]
+  spec.authors = ["Yudai Takada"]
   spec.email = ["t.yudai92@gmail.com"]
 
   spec.summary = "Golden image comparison for Ruby graphics"
