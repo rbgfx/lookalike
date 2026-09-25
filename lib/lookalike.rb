@@ -271,11 +271,16 @@ module Lookalike
       padded_actual = Tessel::Image.new(width, height)
       padded_expected.blit(expected, 0, 0, blend: :copy)
       padded_actual.blit(actual, 0, 0, blend: :copy)
+      overlap_width = [expected.width, actual.width].min
+      overlap_height = [expected.height, actual.height].min
+      shared_expected = expected.crop(0, 0, overlap_width, overlap_height)
+      shared_actual = actual.crop(0, 0, overlap_width, overlap_height)
       _matched, diff, maximum, box = if mode == :channel
-        Metrics::Channel.compare(padded_expected, padded_actual, max_delta: max_delta, allowed_pixels: allowed_pixels)
+        Metrics::Channel.compare(shared_expected, shared_actual, max_delta: max_delta, allowed_pixels: allowed_pixels)
       else
-        Metrics::YIQ.compare(padded_expected, padded_actual, threshold: threshold, allowed_pixels: allowed_pixels, ignore_antialiasing: ignore_antialiasing)
+        Metrics::YIQ.compare(shared_expected, shared_actual, threshold: threshold, allowed_pixels: allowed_pixels, ignore_antialiasing: ignore_antialiasing)
       end
+      diff_image = DiffRenderer.render(padded_expected, padded_actual, mode: mode, threshold: threshold, max_delta: max_delta, ignore_antialiasing: ignore_antialiasing)
       dimension_box = nil
       dimension_diff = 0
       (0...height).each do |y|
@@ -283,6 +288,7 @@ module Lookalike
           next if x < expected.width && y < expected.height && x < actual.width && y < actual.height
 
           dimension_diff += 1
+          diff_image[x, y] = [255, 0, 0, 255]
           if dimension_box
             x0 = [dimension_box[0], x].min
             y0 = [dimension_box[1], y].min
@@ -307,7 +313,6 @@ module Lookalike
           box = dimension_box
         end
       end
-      diff_image = DiffRenderer.render(padded_expected, padded_actual, mode: mode, threshold: threshold, max_delta: max_delta)
       return Result.new(expected: expected, actual: actual, diff_pixels: diff, max_delta: maximum, bounding_box: box, diff_image: diff_image, mode: mode, matched: false)
     end
     return Result.new(expected: expected, actual: actual, diff_pixels: 0, max_delta: 0, bounding_box: nil, diff_image: nil, mode: mode, matched: true) if expected.bytes == actual.bytes

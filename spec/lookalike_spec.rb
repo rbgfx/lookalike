@@ -37,6 +37,19 @@ RSpec.describe Lookalike do
     expect(result.diff_image.height).to eq(1)
   end
 
+  it "counts each extra pixel once when image dimensions differ" do
+    expected = Tessel::Image.new(1, 1, fill: "#ffffff")
+    actual = Tessel::Image.new(2, 1, fill: "#ffffff")
+
+    result = Lookalike.compare(expected, actual, mode: :channel)
+    expect(result.match?).to be(false)
+    expect(result.diff_pixels).to eq(1)
+    expect(result.bounding_box).to eq([1, 0, 1, 1])
+
+    transparent = Lookalike.compare(Tessel::Image.new(1, 1), Tessel::Image.new(2, 1), mode: :channel)
+    expect(transparent.diff_image[1, 0]).to eq([255, 0, 0, 255])
+  end
+
   it "rejects unsafe snapshot names" do
     expect { Lookalike::Store.new.path("../secret") }.to raise_error(ArgumentError)
     expect { Lookalike::Store.new.output_path("safe", "actual", variant: "../bad") }.to raise_error(ArgumentError)
