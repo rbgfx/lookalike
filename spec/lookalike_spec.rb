@@ -85,6 +85,27 @@ RSpec.describe Lookalike do
     end
   end
 
+  it "keeps separate report results for nested and underscored snapshot names" do
+    Dir.mktmpdir do |directory|
+      previous = Lookalike.config
+      previous_update = ENV["LOOKALIKE_UPDATE"]
+      config = Lookalike::Config.new
+      config.snapshot_dir = File.join(directory, "snapshots")
+      config.output_dir = File.join(directory, "output")
+      Lookalike.instance_variable_set(:@config, config)
+      ENV["LOOKALIKE_UPDATE"] = "1"
+      image = Tessel::Image.new(1, 1)
+      %w[a/b a_b].each { |name| Lookalike.assert_snapshot(image, name) }
+
+      Lookalike::Report.new(config.output_dir).write
+      names = JSON.parse(File.read(File.join(config.output_dir, "results.json"))).map { |entry| entry.fetch("name") }
+      expect(names.sort).to eq(%w[a/b a_b])
+    ensure
+      Lookalike.instance_variable_set(:@config, previous)
+      ENV["LOOKALIKE_UPDATE"] = previous_update
+    end
+  end
+
   it "ignores only intermediate antialiasing pixels on a contrasting edge" do
     expected = Tessel::Image.new(3, 1, fill: "#ffffff")
     actual = expected.dup

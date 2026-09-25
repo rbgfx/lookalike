@@ -2,6 +2,7 @@
 
 require "json"
 require "erb"
+require "digest"
 require "fileutils"
 require "tessel"
 
@@ -375,8 +376,7 @@ module Lookalike
   end
 
   def record_result(name, result, status:, variant: nil, expected_path:, actual_path:, diff_path: nil)
-    relative = Store.new(config).send(:safe_name, name).tr("/", "__")
-    relative = "#{relative}@#{variant}" if variant
+    relative = Digest::SHA256.hexdigest(JSON.generate([Store.new(config).send(:safe_name, name), variant&.to_s]))
     directory = File.join(config.output_dir, "results")
     FileUtils.mkdir_p(directory)
     payload = result.to_h.merge("name" => name.to_s, "variant" => variant&.to_s, "status" => status,
