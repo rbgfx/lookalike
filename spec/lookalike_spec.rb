@@ -37,6 +37,14 @@ RSpec.describe Lookalike do
     expect(result.diff_image.height).to eq(1)
   end
 
+  it "rejects non-finite perceptual thresholds" do
+    expected = Tessel::Image.new(1, 1, fill: "#000000")
+    actual = Tessel::Image.new(1, 1, fill: "#ffffff")
+    [Float::NAN, Float::INFINITY].each do |threshold|
+      expect { Lookalike.compare(expected, actual, threshold: threshold) }.to raise_error(ArgumentError, /threshold/)
+    end
+  end
+
   it "counts each extra pixel once when image dimensions differ" do
     expected = Tessel::Image.new(1, 1, fill: "#ffffff")
     actual = Tessel::Image.new(2, 1, fill: "#ffffff")

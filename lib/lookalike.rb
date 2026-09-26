@@ -262,7 +262,7 @@ module Lookalike
     max_delta = Integer(max_delta)
     raise ArgumentError, "max delta must be between 0 and 255" unless max_delta.between?(0, 255)
     threshold = Float(threshold)
-    raise ArgumentError, "threshold must not be negative" if threshold.negative?
+    raise ArgumentError, "threshold must be finite and non-negative" unless threshold.finite? && !threshold.negative?
     expected = Input.normalize(expected)
     actual = Input.normalize(actual)
     unless expected.width == actual.width && expected.height == actual.height
